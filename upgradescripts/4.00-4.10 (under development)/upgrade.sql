@@ -307,3 +307,11 @@ BEGIN
 	VALUES (N'catalogsettings.notifycustomeraboutproductreviewreply', N'false', 0)
 END
 GO
+
+--new setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'securitysettings.allownonasciicharactersinheaders')
+BEGIN
+	INSERT [Setting] ([Name], [Value], [StoreId])
+	VALUES (N'securitysettings.allownonasciicharactersinheaders', N'true', 0)
+END
+GO
