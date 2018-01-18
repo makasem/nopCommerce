@@ -11,7 +11,6 @@ using Nop.Services.Security;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.Mvc.Filters;
-using System.Collections.Generic;
 
 namespace Nop.Web.Areas.Admin.Controllers
 {
@@ -401,7 +400,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         #region Mapped products
 
         [HttpPost]
-        public virtual IActionResult MappedProducts(int specificationAttributeId, DataSourceRequest command)
+        public virtual IActionResult UsedByProducts(int specificationAttributeId, DataSourceRequest command)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageAttributes))
                 return AccessDeniedKendoGridJson();
@@ -411,11 +410,12 @@ namespace Nop.Web.Areas.Admin.Controllers
            
             var gridModel = new DataSourceResult
             {
-                Data = products.Select(product => new SpecificationAttributeProductModel
+                Data = products.Select(product => new SpecificationAttributeOptionModel.UsedByProducts
                 {
                     SpecificationAttributeId = specificationAttributeId,
                     ProductId = product.Id,
-                    ProductName = product.Name
+                    ProductName = product.Name,
+                    Published = product.Published
                 }),
                 Total = products.TotalCount
             };

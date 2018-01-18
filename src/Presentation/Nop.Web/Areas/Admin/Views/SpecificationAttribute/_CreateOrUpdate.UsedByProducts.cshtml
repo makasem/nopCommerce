@@ -6,19 +6,19 @@
 }
 
 <div class="panel-group">
-    @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_mapped_products_top", additionalData = Model })
+    @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_used_by_products_top", additionalData = Model })
     <div class="panel panel-default">
         <div class="panel-body">
-            <div id="specificationattributemappedproducts-grid"></div>
+            <div id="used-by-products-grid"></div>
 
             <script type="text/javascript">
                 $(document).ready(function () {
-                    $("#specificationattributemappedproducts-grid").kendoGrid({
+                    $("#used-by-products-grid").kendoGrid({
                         dataSource: {
                             type: "json",
                             transport: {
                                 read: {
-                                    url: "@Html.Raw(Url.Action("MappedProducts", "SpecificationAttribute", new {specificationAttributeId = Model.Id}))",
+                                    url: "@Html.Raw(Url.Action("UsedByProducts", "SpecificationAttribute", new {specificationAttributeId = Model.Id}))",
                                     type: "POST",
                                     dataType: "json",
                                     data: addAntiForgeryToken
@@ -55,8 +55,16 @@
                         columns: [
                             {
                                 field: "ProductName",
-                                title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts.Product")"
+                                title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts.Product")"
                             }, {
+                                field: "Published",
+                                title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts.Published")",
+                                width: 100,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                            },
+                            {
                                 field: "ProductId",
                                 title: "@T("Admin.Common.View")",
                                 width: 100,
@@ -70,5 +78,5 @@
             </script>
         </div>
     </div>
-    @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_mapped_products_bottom", additionalData = Model })
+    @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_used_by_products_bottom", additionalData = Model })
 </div>
